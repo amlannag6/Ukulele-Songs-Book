@@ -1,3 +1,6 @@
-streamlit>=0.90
+streamlit>0.90
 requests
 beautifulsoup4
+streamlit==1.26.0  # You can specify a specific version of Streamlit
+
+Pillow==8.3.2  # Required for working with images
