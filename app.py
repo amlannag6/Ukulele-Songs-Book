@@ -23,23 +23,19 @@ def organize_and_store_pdfs(uploaded_files):
     return stored_files
 
 # Function to display PDF content using base64 encoding
+# Function to display PDF content using HTML
 def display_pdf(pdf_path):
     with open(pdf_path, "rb") as pdf_file:
         pdf_bytes = pdf_file.read()
         base64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
 
-    # Adjust the width and height to your desired dimensions
-    width = 800
-    height = 800
-
-    # Use the <object> tag to display the PDF without the viewer header
+    # Embed the PDF viewer using HTML
     st.markdown(
-        f'<object data="data:application/pdf;base64,{base64_pdf}" '
-        f'width="{width}" height="{height}" type="application/pdf">'
-        f'Your browser does not support PDFs. <a href="data:application/pdf;base64,{base64_pdf}">'
-        f'Download PDF</a> instead.</object>',
+        f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
+        'width="100%" height="600px"></iframe>',
         unsafe_allow_html=True,
     )
+
 
 # Define the folder where your PDFs are stored
 pdf_folder = "songs"
