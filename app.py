@@ -32,7 +32,7 @@ def display_pdf(pdf_path):
     # Embed the PDF viewer using HTML
     st.markdown(
         f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
-        'width="100%" height="600px"></iframe>',
+        'width="100%" height="850px"></iframe>',
         unsafe_allow_html=True,
     )
 
