@@ -2,7 +2,6 @@ import streamlit as st
 import os
 import base64
 import webbrowser
-from streamlit.components.v1 import html
 
 # Streamlit app
 st.title("Ukulele-Song-Book By AMLAN")
@@ -31,24 +30,17 @@ def display_pdf(pdf_path, auto_scroll=False):
         base64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
 
     # Embed the PDF viewer using HTML
-    if auto_scroll:
-        st.markdown(
-            f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
-            'width="100%" height="850px" style="scroll-behavior: smooth;"></iframe>',
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
-            'width="100%" height="850px"></iframe>',
-            unsafe_allow_html=True,
-        )
+    st.markdown(
+        f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
+        'width="100%" height="850px"></iframe>',
+        unsafe_allow_html=True,
+    )
 
-# Function to open a YouTube Music link in the browser
+# Function to search for music on YouTube and open it in a web browser
 def open_youtube_music(song_name):
-    search_query = f"{song_name} ukulele cover"  # Modify this as needed
-    url = f"https://music.youtube.com/search?q={search_query}"
-    webbrowser.open(url)
+    search_query = f"{song_name} official audio"  # Modify the query as needed
+    search_url = f"https://music.youtube.com/search?q={search_query}"
+    webbrowser.open(search_url)
 
 # Define the folder where your PDFs are stored
 pdf_folder = "songs"
