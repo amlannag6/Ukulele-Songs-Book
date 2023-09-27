@@ -1,9 +1,11 @@
 import streamlit as st
 import os
 import base64
+import webbrowser
+from streamlit.components.v1 import html
 
 # Streamlit app
-st.title("Amlan ~ Song-Book Project")
+st.title("Ukulele-Song-Book By AMLAN")
 
 # Function to organize and store uploaded PDFs in the "songs" folder
 def organize_and_store_pdfs(uploaded_files):
@@ -23,19 +25,30 @@ def organize_and_store_pdfs(uploaded_files):
     return stored_files
 
 # Function to display PDF content using base64 encoding
-# Function to display PDF content using HTML
-def display_pdf(pdf_path):
+def display_pdf(pdf_path, auto_scroll=False):
     with open(pdf_path, "rb") as pdf_file:
         pdf_bytes = pdf_file.read()
         base64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
 
     # Embed the PDF viewer using HTML
-    st.markdown(
-        f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
-        'width="100%" height="850px"></iframe>',
-        unsafe_allow_html=True,
-    )
+    if auto_scroll:
+        st.markdown(
+            f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
+            'width="100%" height="850px" style="scroll-behavior: smooth;"></iframe>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f'<iframe src="data:application/pdf;base64,{base64_pdf}" '
+            'width="100%" height="850px"></iframe>',
+            unsafe_allow_html=True,
+        )
 
+# Function to open a YouTube Music link in the browser
+def open_youtube_music(song_name):
+    search_query = f"{song_name} ukulele cover"  # Modify this as needed
+    url = f"https://music.youtube.com/search?q={search_query}"
+    webbrowser.open(url)
 
 # Define the folder where your PDFs are stored
 pdf_folder = "songs"
@@ -46,7 +59,6 @@ pdf_files = [f for f in os.listdir(pdf_folder) if f.endswith(".pdf")]
 # Main content section
 st.sidebar.header("Song Selection Options:")
 search_query = st.sidebar.text_input("Search by name:")
-
 
 # Create an alphabetically organized list of available songs
 alphabetical_songs = {}
@@ -74,7 +86,10 @@ if selected_letter == "All":
             if st.sidebar.button(file_path):
                 st.subheader(f"Currently Viewing: {file_path}")
                 pdf_path = os.path.join(pdf_folder, file_path)
-                display_pdf(pdf_path)
+                display_pdf(pdf_path, auto_scroll=True)
+                # Add a YouTube Music button to open the song in YouTube Music
+                if st.button(f"Listen to '{file_path}' on YouTube Music"):
+                    open_youtube_music(file_path)
 else:
     selected_songs = alphabetical_songs.get(selected_letter, [])
     st.sidebar.subheader(f"Songs Starting with '{selected_letter}'")
@@ -83,8 +98,10 @@ else:
         if st.sidebar.button(file_path):
             st.subheader(f"Currently Viewing: {file_path}")
             pdf_path = os.path.join(pdf_folder, file_path)
-            display_pdf(pdf_path)
-
+            display_pdf(pdf_path, auto_scroll=True)
+            # Add a YouTube Music button to open the song in YouTube Music
+            if st.button(f"Listen to '{file_path}' on YouTube Music"):
+                open_youtube_music(file_path)
 
 # Create a sidebar section for Admin functions
 st.sidebar.subheader("Admin Section")
@@ -114,7 +131,7 @@ if password_input == correct_password:
         st.sidebar.text("Downloading PDFs from the website...")
         # Add code to fetch PDFs here
 
-    # Provide a message indicating that the download has finished
+        # Provide a message indicating that the download has finished
         st.sidebar.text("PDFs downloaded successfully!")
 
 else:
