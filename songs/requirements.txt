@@ -1,3 +1,0 @@
-streamlit>=0.90
-requests
-beautifulsoup4
