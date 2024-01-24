@@ -6,7 +6,11 @@ from urllib.parse import urljoin
 # URLs of the webpages with the links to PDFs
 urls = [
     "https://ukuleleorchestraofkamloops.com/our-music/songs-a-i",
-    "https://ukuleleorchestraofkamloops.com/our-music/songs-j-z"
+    "https://ukuleleorchestraofkamloops.com/our-music/songs-j-z", 
+    "https://ukuleleorchestraofkamloops.com/christmas-songs",
+    "https://ukuleleorchestraofkamloops.com/kids-songs",
+    "https://ukuleleorchestraofkamloops.com/our-music/gospel-spiritual-songs",
+    "https://ukuleleorchestraofkamloops.com/our-music/latest-uploads"
 ]
 
 # Directory where you want to save the downloaded PDFs
